@@ -121,14 +121,15 @@
                     </div>
                     <button type="button" class="next-button" onclick="evaluateGame()">Submit</button>
                 </div>
-                                        <!-- Success Animation Container -->
-    <div id="successPage" class="success-container hidden">
-        <div class="success-animation">
-            <div class="checkmark"></div>
-            <h2>Data saved successfully!</h2>
-            <p>Thank you for submitting the game rating questionnaire.</p>
-            <button onclick="reloadPage()">Submit Another</button>
-        </div>
+   <!-- Success Animation Container -->
+<div id="successPage" class="success-container hide">
+    <div class="success-animation">
+        <div class="checkmark"></div>
+        <h2>Data saved successfully!</h2>
+        <p>Thank you for submitting the game rating questionnaire.</p>
+        <button onclick="reloadPage()">Submit Another</button>
+    </div>
+</div>
             </form>
         </div>
         <div id="result" class="result"></div>
@@ -287,7 +288,18 @@ function evaluateGame() {
 }
 function showSuccessPage() {
     const successPage = document.getElementById('successPage');
-    successPage.classList.remove('hidden');  // Remove the 'hidden' class to show the element
+    successPage.classList.add('show');  // Show the element
+    successPage.classList.remove('hide');  // Remove hide if present
+
+    // Hide all question cards
+    const totalPages = 6; // Total number of pages including user info
+    for (let i = 0; i < totalPages; i++) {
+        const page = document.getElementById(`page-${i}`);
+        if (page) {
+            page.classList.add('hide');
+            page.classList.remove('show');
+        }
+    }
 }
 
 function reloadPage() {
