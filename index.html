@@ -11,18 +11,19 @@
         <h1>Roblox Game Rating Questionnaire</h1>
         <div class="form-container">
             <form id="gameForm">
-                <!-- Game Details Page -->
+                <!-- User Information Card -->
                 <div class="question-card" id="page-0">
-                    <h2>Game Details</h2>
-                    <label for="gameName">Game Name:</label>
-                    <input type="text" id="gameName" name="gameName" required><br>
-                    <label for="groupName">Group Name (If you have one):</label>
-                    <input type="text" id="groupName" name="groupName"><br>
+                    <h2>0. User Information</h2>
+                    <p>Please provide your name and group name.</p>
+                    <label for="username">Name:</label><br>
+                    <input type="text" id="username" name="username" required><br>
+                    <label for="groupname">Group Name:</label><br>
+                    <input type="text" id="groupname" name="groupname" required><br>
                     <button type="button" class="next-button" onclick="showNextPage(1)">Next</button>
                 </div>
 
-                <!-- Question 1 -->
-                <div class="question-card" id="page-1" style="display: none;">
+                <!-- Violence Card -->
+                <div class="question-card" id="page-1">
                     <h2>1. Does the game contain violence?</h2>
                     <p>Description: Violence includes physical confrontations, fighting, or harming other characters.</p>
                     <input type="radio" id="violence-yes" name="violence" value="yes">
@@ -41,68 +42,68 @@
                     <button type="button" class="next-button" onclick="showNextPage(2)">Next</button>
                 </div>
 
-                <!-- Question 2 -->
-                <div class="question-card" id="page-2" style="display: none;">
-                    <h2>2. Does the game contain inappropriate language?</h2>
-                    <p>Description: Inappropriate language includes swearing, racial slurs, or offensive terms.</p>
-                    <input type="radio" id="language-yes" name="language" value="yes" onchange="toggleSubQuestions('language', true)">
+                <!-- Language Card -->
+                <div class="question-card" id="page-2">
+                    <h2>2. Does the game use strong language?</h2>
+                    <p>Description: Strong language includes profanity or explicit language.</p>
+                    <input type="radio" id="language-yes" name="language" value="yes">
                     <label for="language-yes">Yes</label><br>
-                    <input type="radio" id="language-no" name="language" value="no" onchange="toggleSubQuestions('language', false)">
+                    <input type="radio" id="language-no" name="language" value="no">
                     <label for="language-no">No</label>
-                    <div class="sub-questions" id="language-sub" style="display: none;">
-                        <label>Type of inappropriate language:</label><br>
+                    <div class="sub-questions" id="language-sub">
+                        <label>Extent of language:</label><br>
                         <input type="radio" id="language-mild" name="languageType" value="1">
-                        <label for="language-mild">Mild (e.g., occasional swearing)</label><br>
+                        <label for="language-mild">Mild (e.g., occasional mild swearing)</label><br>
                         <input type="radio" id="language-moderate" name="languageType" value="2">
-                        <label for="language-moderate">Moderate (e.g., frequent swearing or offensive terms)</label><br>
+                        <label for="language-moderate">Moderate (e.g., frequent mild to moderate swearing)</label><br>
                         <input type="radio" id="language-extensive" name="languageType" value="3">
-                        <label for="language-extensive">Extensive (e.g., strong language or hate speech)</label>
+                        <label for="language-extensive">Extensive (e.g., strong profanity)</label>
                     </div>
                     <button type="button" class="next-button" onclick="showNextPage(3)">Next</button>
                 </div>
 
-                <!-- Question 3 -->
-                <div class="question-card" id="page-3" style="display: none;">
-                    <h2>3. Does the game contain mature content?</h2>
-                    <p>Description: Mature content includes sexual themes, nudity, or explicit behavior.</p>
-                    <input type="radio" id="mature-yes" name="mature" value="yes" onchange="toggleSubQuestions('mature', true)">
+                <!-- Mature Themes Card -->
+                <div class="question-card" id="page-3">
+                    <h2>3. Does the game contain mature themes?</h2>
+                    <p>Description: Mature themes include topics such as drug use, sexual content, or serious crime.</p>
+                    <input type="radio" id="mature-yes" name="mature" value="yes">
                     <label for="mature-yes">Yes</label><br>
-                    <input type="radio" id="mature-no" name="mature" value="no" onchange="toggleSubQuestions('mature', false)">
+                    <input type="radio" id="mature-no" name="mature" value="no">
                     <label for="mature-no">No</label>
-                    <div class="sub-questions" id="mature-sub" style="display: none;">
+                    <div class="sub-questions" id="mature-sub">
                         <label>Type of mature content:</label><br>
                         <input type="radio" id="mature-light" name="matureType" value="1">
-                        <label for="mature-light">Light (e.g., mild suggestive content)</label><br>
+                        <label for="mature-light">Light (e.g., references to drugs or mild sexual content)</label><br>
                         <input type="radio" id="mature-moderate" name="matureType" value="2">
-                        <label for="mature-moderate">Moderate (e.g., sexual themes, nudity)</label><br>
-                        <input type="radio" id="mature-extensive" name="matureType" value="3">
-                        <label for="mature-extensive">Extensive (e.g., explicit sexual content)</label>
+                        <label for="mature-moderate">Moderate (e.g., scenes involving drugs or violence)</label><br>
+                        <input type="radio" id="mature-heavy" name="matureType" value="3">
+                        <label for="mature-heavy">Heavy (e.g., explicit drug use, intense violence)</label>
                     </div>
                     <button type="button" class="next-button" onclick="showNextPage(4)">Next</button>
                 </div>
 
-                <!-- Question 4 -->
-                <div class="question-card" id="page-4" style="display: none;">
-                    <h2>4. Does the game contain fear elements?</h2>
-                    <p>Description: Fear elements include frightening or unsettling themes, such as horror or suspense.</p>
-                    <input type="radio" id="fear-yes" name="fear" value="yes" onchange="toggleSubQuestions('fear', true)">
+                <!-- Fear Card -->
+                <div class="question-card" id="page-4">
+                    <h2>4. Does the game contain frightening content?</h2>
+                    <p>Description: Frightening content includes scary or disturbing imagery or themes.</p>
+                    <input type="radio" id="fear-yes" name="fear" value="yes">
                     <label for="fear-yes">Yes</label><br>
-                    <input type="radio" id="fear-no" name="fear" value="no" onchange="toggleSubQuestions('fear', false)">
+                    <input type="radio" id="fear-no" name="fear" value="no">
                     <label for="fear-no">No</label>
-                    <div class="sub-questions" id="fear-sub" style="display: none;">
-                        <label>Type of fear elements:</label><br>
+                    <div class="sub-questions" id="fear-sub">
+                        <label>Type of frightening content:</label><br>
                         <input type="radio" id="fear-mild" name="fearType" value="1">
-                        <label for="fear-mild">Mild (e.g., suspenseful moments)</label><br>
+                        <label for="fear-mild">Mild (e.g., spooky but not graphic)</label><br>
                         <input type="radio" id="fear-moderate" name="fearType" value="2">
-                        <label for="fear-moderate">Moderate (e.g., unsettling imagery)</label><br>
+                        <label for="fear-moderate">Moderate (e.g., disturbing imagery)</label><br>
                         <input type="radio" id="fear-extensive" name="fearType" value="3">
-                        <label for="fear-extensive">Extensive (e.g., intense horror)</label>
+                        <label for="fear-extensive">Extensive (e.g., intense horror or graphic content)</label>
                     </div>
                     <button type="button" class="next-button" onclick="showNextPage(5)">Next</button>
                 </div>
 
-                <!-- Question 5 -->
-                <div class="question-card" id="page-5" style="display: none;">
+                <!-- Competitive Card -->
+                <div class="question-card" id="page-5">
                     <h2>5. Is the game intended for a competitive audience?</h2>
                     <p>Description: Competitive games involve skill-based challenges and may include intense gameplay.</p>
                     <input type="radio" id="competitive-yes" name="competitive" value="yes">
@@ -116,19 +117,13 @@
                         <input type="radio" id="competitive-moderate" name="competitiveType" value="2">
                         <label for="competitive-moderate">Moderate (e.g., balanced competitive gameplay)</label><br>
                         <input type="radio" id="competitive-intensive" name="competitiveType" value="3">
-                        <label for="competitive-intensive">Intensive (e.g., highly competitive)</label>
+                        <label for="competitive-intensive">Intensive (e.g., highly competitive with intense challenges)</label>
                     </div>
-                    <button type="button" class="next-button" onclick="showNextPage(6)">Submit</button>
-                </div>
-
-                <!-- Final Page (Submission) -->
-                <div class="question-card" id="page-6" style="display: none;">
-                    <h2>Thank You!</h2>
-                    <p>Your responses have been recorded. Click submit to complete the questionnaire.</p>
-                    <button type="submit" class="submit-button">Submit</button>
+                    <button type="button" class="next-button" onclick="evaluateGame()">Submit</button>
                 </div>
             </form>
         </div>
+        <div id="result" class="result"></div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
 <script>
@@ -137,111 +132,120 @@
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    function showNextPage(pageNumber) {
-        const pages = document.querySelectorAll('.question-card');
-        pages.forEach(page => page.style.display = 'none');
-        document.getElementById(`page-${pageNumber}`).style.display = 'block';
+async function submitFormData(data) {
+    const { error } = await supabase
+        .from('game_ratings')
+        .insert([data]);
+
+    if (error) {
+        console.error('Error inserting data:', error);
+        alert('An error occurred while saving the data.');
+    } else {
+        alert('Data saved successfully!');
+        window.location.reload();
     }
+}
 
-    function toggleSubQuestions(questionId, show) {
-        document.getElementById(`${questionId}-sub`).style.display = show ? 'block' : 'none';
+function showNextPage(pageNumber) {
+    const totalPages = 6; // Total number of pages including user info
+    for (let i = 0; i < totalPages; i++) {
+        document.getElementById(`page-${i}`).style.display = (i === pageNumber) ? 'block' : 'none';
     }
+    // Handle sub-questions visibility
+    handleSubQuestionsVisibility();
+}
 
-    function submitForm() {
-        const form = document.getElementById('gameForm');
-        
-        // Extract values
-        const gameName = form.elements['gameName'].value;
-        const groupName = form.elements['groupName'].value || null;
-
-        const violence = form.elements['violence']?.value === 'yes' ? 1 : 0;
-        const violenceType = parseInt(form.elements['violenceType'] ? form.elements['violenceType'].value : 0, 10);
-        const language = form.elements['language']?.value === 'yes' ? 1 : 0;
-        const languageType = parseInt(form.elements['languageType'] ? form.elements['languageType'].value : 0, 10);
-        const mature = form.elements['mature']?.value === 'yes' ? 1 : 0;
-        const matureType = parseInt(form.elements['matureType'] ? form.elements['matureType'].value : 0, 10);
-        const fear = form.elements['fear']?.value === 'yes' ? 1 : 0;
-        const fearType = parseInt(form.elements['fearType'] ? form.elements['fearType'].value : 0, 10);
-        const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
-        const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
-
-        // Define weights
-        const weights = {
-            violence: 1,
-            language: 1,
-            mature: 1,
-            fear: 0.5,
-            competitive: 0.5
-        };
-
-        // Define sub-question weights
-        const subWeights = {
-            violence: [0.5, 1, 2],
-            language: [0.5, 1, 2],
-            mature: [1, 2, 3],
-            fear: [0.5, 1, 1.5],
-            competitive: [0.5, 1, 1.5]
-        };
-
-        // Calculate the total score
-        const score = (
-            (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
-            (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
-            (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
-            (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
-            (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
-        );
-
-        // Determine the rating based on the score
-        let rating = '';
-
-        if (score >= 10) {
-            rating = '18+';
-        } else if (score >= 8) {
-            rating = '17+';
-        } else if (score >= 6) {
-            rating = '16+';
-        } else if (score >= 4) {
-            rating = '15+';
-        } else if (score >= 3) {
-            rating = '14+';
-        } else if (score >= 2) {
-            rating = '13+';
-        } else if (score >= 1) {
-            rating = '10+';
-        } else {
-            rating = '7+';
+function handleSubQuestionsVisibility() {
+    const questions = ['violence', 'language', 'mature', 'fear', 'competitive'];
+    questions.forEach(question => {
+        const yesRadio = document.getElementById(`${question}-yes`);
+        const subQuestionsDiv = document.getElementById(`${question}-sub`);
+        if (yesRadio && subQuestionsDiv) {
+            subQuestionsDiv.style.display = yesRadio.checked ? 'block' : 'none';
         }
+    });
+}
 
-        // Insert data into Supabase
-        supabase
-            .from('games_rotrust')
-            .insert([
-                { 
-                    game_name: gameName, 
-                    group_name: groupName,
-                    violence: violence,
-                    violence_type: violenceType,
-                    language: language,
-                    language_type: languageType,
-                    mature: mature,
-                    mature_type: matureType,
-                    fear: fear,
-                    fear_type: fearType,
-                    competitive: competitive,
-                    competitive_type: competitiveType,
-                    rating: rating
-                }
-            ])
-            .then(({ data, error }) => {
-                if (error) {
-                    console.error('Error inserting data:', error);
-                    document.getElementById('result').textContent = 'There was an error submitting the form. Please try again.';
-                } else {
-                    document.getElementById('result').textContent = `The suitable age rating for this game is: ${rating}`;
-                }
-            });
+function evaluateGame() {
+    const form = document.getElementById('gameForm');
+    const result = document.getElementById('result');
+
+    // Extract user information
+    const username = form.elements['username'].value;
+    const groupname = form.elements['groupname'].value;
+
+    // Extract main question values
+    const violence = form.elements['violence']?.value === 'yes' ? 1 : 0;
+    const violenceType = parseInt(form.elements['violenceType'] ? form.elements['violenceType'].value : 0, 10);
+    const language = form.elements['language']?.value === 'yes' ? 1 : 0;
+    const languageType = parseInt(form.elements['languageType'] ? form.elements['languageType'].value : 0, 10);
+    const mature = form.elements['mature']?.value === 'yes' ? 1 : 0;
+    const matureType = parseInt(form.elements['matureType'] ? form.elements['matureType'].value : 0, 10);
+    const fear = form.elements['fear']?.value === 'yes' ? 1 : 0;
+    const fearType = parseInt(form.elements['fearType'] ? form.elements['fearType'].value : 0, 10);
+    const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
+    const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
+
+    // Calculate the total score
+    const score = (
+        (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
+        (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
+        (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
+        (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
+        (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
+    );
+
+    // Determine the rating based on the score
+    let rating = '';
+
+    if (score >= 10) {
+        rating = '18+';
+    } else if (score >= 8) {
+        rating = '17+';
+    } else if (score >= 6) {
+        rating = '16+';
+    } else if (score >= 4) {
+        rating = '15+';
+    } else if (score >= 3) {
+        rating = '14+';
+    } else if (score >= 2) {
+        rating = '13+';
+    } else if (score >= 1) {
+        rating = '10+';
+    } else {
+        rating = '7+';
     }
+
+    result.textContent = `The suitable age rating for this game is: ${rating}`;
+
+    // Prepare data to submit
+    const formData = {
+        username: username,
+        groupname: groupname,
+        violence: violence,
+        violenceType: violenceType,
+        language: language,
+        languageType: languageType,
+        mature: mature,
+        matureType: matureType,
+        fear: fear,
+        fearType: fearType,
+        competitive: competitive,
+        competitiveType: competitiveType,
+        rating: rating
+    };
+
+    // Submit form data
+    submitFormData(formData);
+}
+
+// Event listeners for showing/hiding sub-questions
+document.addEventListener('change', handleSubQuestionsVisibility);
+
+// Show the first page on load
+window.onload = function() {
+    showNextPage(0);
+};
 </script>
 </body>
 </html>
