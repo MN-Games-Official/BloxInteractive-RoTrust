@@ -120,13 +120,7 @@
                         <label for="competitive-intensive">Intensive (e.g., highly competitive with intense challenges)</label>
                     </div>
                     <button type="button" class="next-button" onclick="evaluateGame()">Submit</button>
-                </div>
-            </form>
-        </div>
-        <div id="result" class="result"></div>
-    </div>
-    
-    <!-- Success Animation Container -->
+                        <!-- Success Animation Container -->
     <div id="successPage" class="success-container hidden">
         <div class="success-animation">
             <div class="checkmark"></div>
@@ -134,6 +128,11 @@
             <p>Thank you for submitting the game rating questionnaire.</p>
             <button onclick="reloadPage()">Submit Another</button>
         </div>
+                </div>
+            </form>
+        </div>
+        <div id="result" class="result"></div>
+    </div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
 <script>
