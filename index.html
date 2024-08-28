@@ -125,13 +125,24 @@
         </div>
         <div id="result" class="result"></div>
     </div>
+    
+    <!-- Success Animation Container -->
+    <div id="successPage" class="success-container hidden">
+        <div class="success-animation">
+            <div class="checkmark"></div>
+            <h2>Data saved successfully!</h2>
+            <p>Thank you for submitting the game rating questionnaire.</p>
+            <button onclick="reloadPage()">Submit Another</button>
+        </div>
+    </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
 <script>
-    // Supabase client configuration
-    const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Supabase client configuration
+const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+// Function to submit form data to the Supabase database
 async function submitFormData(data) {
     const { error } = await supabase
         .from('game_ratings')
@@ -141,31 +152,50 @@ async function submitFormData(data) {
         console.error('Error inserting data:', error);
         alert('An error occurred while saving the data.');
     } else {
-        alert('Data saved successfully!');
-        window.location.reload();
+        showSuccessPage();
     }
 }
 
+// Show the next page with a smooth transition
 function showNextPage(pageNumber) {
     const totalPages = 6; // Total number of pages including user info
     for (let i = 0; i < totalPages; i++) {
-        document.getElementById(`page-${i}`).style.display = (i === pageNumber) ? 'block' : 'none';
+        const page = document.getElementById(`page-${i}`);
+        if (i === pageNumber) {
+            page.classList.add('show');
+            page.classList.remove('hide');
+        } else {
+            page.classList.add('hide');
+            page.classList.remove('show');
+        }
     }
     // Handle sub-questions visibility
     handleSubQuestionsVisibility();
 }
 
+// Toggle visibility for sub-questions with animations
 function handleSubQuestionsVisibility() {
     const questions = ['violence', 'language', 'mature', 'fear', 'competitive'];
     questions.forEach(question => {
         const yesRadio = document.getElementById(`${question}-yes`);
         const subQuestionsDiv = document.getElementById(`${question}-sub`);
         if (yesRadio && subQuestionsDiv) {
-            subQuestionsDiv.style.display = yesRadio.checked ? 'block' : 'none';
+            if (yesRadio.checked) {
+                subQuestionsDiv.classList.add('fade-in');
+                subQuestionsDiv.classList.remove('fade-out');
+                subQuestionsDiv.style.display = 'block';
+            } else {
+                subQuestionsDiv.classList.add('fade-out');
+                subQuestionsDiv.classList.remove('fade-in');
+                setTimeout(() => {
+                    subQuestionsDiv.style.display = 'none';
+                }, 300);
+            }
         }
     });
 }
 
+// Calculate the game rating and submit the form
 function evaluateGame() {
     const form = document.getElementById('gameForm');
     const result = document.getElementById('result');
@@ -186,33 +216,31 @@ function evaluateGame() {
     const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
     const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
 
+    // Define weights and sub-question weights
+    const weights = {
+        violence: 1,
+        language: 1,
+        mature: 1,
+        fear: 0.5,
+        competitive: 0.5
+    };
+
+    const subWeights = {
+        violence: [0.5, 1, 2],
+        language: [0.5, 1, 2],
+        mature: [1, 2, 3],
+        fear: [0.5, 1, 1.5],
+        competitive: [0.5, 1, 1.5]
+    };
+
     // Calculate the total score
-        // Define weights
-        const weights = {
-            violence: 1,
-            language: 1,
-            mature: 1,
-            fear: 0.5,
-            competitive: 0.5
-        };
-
-        // Define sub-question weights
-        const subWeights = {
-            violence: [0.5, 1, 2],
-            language: [0.5, 1, 2],
-            mature: [1, 2, 3],
-            fear: [0.5, 1, 1.5],
-            competitive: [0.5, 1, 1.5]
-        };
-
-        // Calculate the total score
-        const score = (
-            (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
-            (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
-            (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
-            (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
-            (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
-        );
+    const score = (
+        (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
+        (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
+        (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
+        (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
+        (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
+    );
 
     // Determine the rating based on the score
     let rating = '';
@@ -235,6 +263,7 @@ function evaluateGame() {
         rating = '7+';
     }
 
+    // Display result
     result.textContent = `The suitable age rating for this game is: ${rating}`;
 
     // Prepare data to submit
@@ -259,11 +288,23 @@ function evaluateGame() {
     submitFormData(formData);
 }
 
+// Show success page after form submission
+function showSuccessPage() {
+    const container = document.querySelector('.container');
+    container.innerHTML = `
+        <div class="success-page animated fadeIn">
+            <h1>Success!</h1>
+            <p>Your game rating has been submitted successfully.</p>
+            <button onclick="location.reload()">Submit Another Rating</button>
+        </div>
+    `;
+}
+
 // Event listeners for showing/hiding sub-questions
 document.addEventListener('change', handleSubQuestionsVisibility);
 
 // Show the first page on load
-window.onload = function() {
+window.onload = function () {
     showNextPage(0);
 };
 </script>
