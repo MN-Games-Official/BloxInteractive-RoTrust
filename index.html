@@ -290,14 +290,12 @@ function evaluateGame() {
 
 // Show success page after form submission
 function showSuccessPage() {
-    const container = document.querySelector('.container');
-    container.innerHTML = `
-        <div class="success-page animated fadeIn">
-            <h1>Success!</h1>
-            <p>Your game rating has been submitted successfully.</p>
-            <button onclick="location.reload()">Submit Another Rating</button>
-        </div>
-    `;
+    document.getElementById('successPage').classList.remove('hidden');
+}
+
+// Reload page to submit another form
+function reloadPage() {
+    window.location.reload();
 }
 
 // Event listeners for showing/hiding sub-questions
