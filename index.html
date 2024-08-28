@@ -64,121 +64,122 @@
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
     <script>
-        // Supabase client configuration
-        const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Supabase client configuration
+const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        function showQuestionnaire() {
-            document.getElementById('initialForm').style.display = 'none';
-            document.getElementById('gameForm').style.display = 'block';
-        }
+function showQuestionnaire() {
+    document.getElementById('initialForm').style.display = 'none';
+    document.getElementById('gameForm').style.display = 'block';
+}
 
-        function showNextPage(pageNumber) {
-            const pages = document.querySelectorAll('.question-card');
-            pages.forEach(page => page.style.display = 'none');
-            document.getElementById(`page-${pageNumber}`).style.display = 'block';
-        }
+function showNextPage(pageNumber) {
+    const pages = document.querySelectorAll('.question-card');
+    pages.forEach(page => page.style.display = 'none');
+    document.getElementById(`page-${pageNumber}`).style.display = 'block';
+}
 
-        function toggleSubQuestions(questionId, show) {
-            document.getElementById(`${questionId}-sub`).style.display = show ? 'block' : 'none';
-        }
+function toggleSubQuestions(questionId, show) {
+    document.getElementById(`${questionId}-sub`).style.display = show ? 'block' : 'none';
+}
 
-        function submitForm() {
-            const form = document.getElementById('gameForm');
-            const initialForm = document.getElementById('initialForm');
-            
-            const gameName = initialForm.elements['gameName'].value;
-            const groupName = initialForm.elements['groupName'].value || null;
-            
-            const violence = form.elements['violence']?.value === 'yes' ? 1 : 0;
-            const violenceType = parseInt(form.elements['violenceType'] ? form.elements['violenceType'].value : 0, 10);
-            const language = form.elements['language']?.value === 'yes' ? 1 : 0;
-            const languageType = parseInt(form.elements['languageType'] ? form.elements['languageType'].value : 0, 10);
-            const mature = form.elements['mature']?.value === 'yes' ? 1 : 0;
-            const matureType = parseInt(form.elements['matureType'] ? form.elements['matureType'].value : 0, 10);
-            const fear = form.elements['fear']?.value === 'yes' ? 1 : 0;
-            const fearType = parseInt(form.elements['fearType'] ? form.elements['fearType'].value : 0, 10);
-            const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
-            const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
+function submitForm() {
+    const form = document.getElementById('gameForm');
+    const initialForm = document.getElementById('initialForm');
 
-            // Define weights
-            const weights = {
-                violence: 1,
-                language: 1,
-                mature: 1,
-                fear: 0.5,
-                competitive: 0.5
-            };
+    const gameName = initialForm.elements['gameName'].value;
+    const groupName = initialForm.elements['groupName'].value || null;
 
-            // Define sub-question weights
-            const subWeights = {
-                violence: [0.5, 1, 2],
-                language: [0.5, 1, 2],
-                mature: [1, 2, 3],
-                fear: [0.5, 1, 1.5],
-                competitive: [0.5, 1, 1.5]
-            };
+    const violence = form.elements['violence']?.value === 'yes' ? 1 : 0;
+    const violenceType = parseInt(form.elements['violenceType'] ? form.elements['violenceType'].value : 0, 10);
+    const language = form.elements['language']?.value === 'yes' ? 1 : 0;
+    const languageType = parseInt(form.elements['languageType'] ? form.elements['languageType'].value : 0, 10);
+    const mature = form.elements['mature']?.value === 'yes' ? 1 : 0;
+    const matureType = parseInt(form.elements['matureType'] ? form.elements['matureType'].value : 0, 10);
+    const fear = form.elements['fear']?.value === 'yes' ? 1 : 0;
+    const fearType = parseInt(form.elements['fearType'] ? form.elements['fearType'].value : 0, 10);
+    const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
+    const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
 
-            // Calculate the total score
-            const score = (
-                (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
-                (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
-                (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
-                (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
-                (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
-            );
+    // Define weights
+    const weights = {
+        violence: 1,
+        language: 1,
+        mature: 1,
+        fear: 0.5,
+        competitive: 0.5
+    };
 
-            // Determine the rating based on the score
-            let rating = '';
+    // Define sub-question weights
+    const subWeights = {
+        violence: [0.5, 1, 2],
+        language: [0.5, 1, 2],
+        mature: [1, 2, 3],
+        fear: [0.5, 1, 1.5],
+        competitive: [0.5, 1, 1.5]
+    };
 
-            if (score >= 10) {
-                rating = '18+';
-            } else if (score >= 8) {
-                rating = '17+';
-            } else if (score >= 6) {
-                rating = '16+';
-            } else if (score >= 4) {
-                rating = '15+';
-            } else if (score >= 3) {
-                rating = '14+';
-            } else if (score >= 2) {
-                rating = '13+';
-            } else if (score >= 1) {
-                rating = '10+';
-            } else {
-                rating = '7+';
+    // Calculate the total score
+    const score = (
+        (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
+        (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
+        (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
+        (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
+        (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
+    );
+
+    // Determine the rating based on the score
+    let rating = '';
+
+    if (score >= 10) {
+        rating = '18+';
+    } else if (score >= 8) {
+        rating = '17+';
+    } else if (score >= 6) {
+        rating = '16+';
+    } else if (score >= 4) {
+        rating = '15+';
+    } else if (score >= 3) {
+        rating = '14+';
+    } else if (score >= 2) {
+        rating = '13+';
+    } else if (score >= 1) {
+        rating = '10+';
+    } else {
+        rating = '7+';
+    }
+
+    // Insert data into Supabase
+    supabase
+        .from('games_rotrust')
+        .insert([
+            { 
+                game_name: gameName, 
+                group_name: groupName,
+                violence: violence,
+                violence_type: violenceType,
+                language: language,
+                language_type: languageType,
+                mature: mature,
+                mature_type: matureType,
+                fear: fear,
+                fear_type: fearType,
+                competitive: competitive,
+                competitive_type: competitiveType,
+                rating: rating
             }
-
-            // Insert data into Supabase
-            supabase
-                .from('games_rotrust')
-                .insert([
-                    { 
-                        game_name: gameName, 
-                        group_name: groupName,
-                        violence: violence,
-                        violence_type: violenceType,
-                        language: language,
-                        language_type: languageType,
-                        mature: mature,
-                        mature_type: matureType,
-                        fear: fear,
-                        fear_type: fearType,
-                        competitive: competitive,
-                        competitive_type: competitiveType,
-                        rating: rating
-                    }
-                ])
-                .then(({ data, error }) => {
-                    if (error) {
-                        console.error('Error inserting data:', error);
-                        document.getElementById('result').textContent = 'There was an error submitting the form. Please try again.';
-                    } else {
-                        document.getElementById('result').textContent = `The suitable age rating for this game is: ${rating}`;
-                    }
-                });
-        }
-    </script>
+        ])
+        .then(({ data, error }) => {
+            if (error) {
+                console.error('Error inserting data:', error);
+                document.getElementById('result').textContent = 'There was an error submitting the form. Please try again.';
+            } else {
+                document.getElementById('result').textContent = `The suitable age rating for this game is: ${rating}`;
+                showQuestionnaire(); // Show the questionnaire form after successful submission
+            }
+        });
+}
+</script>
 </body>
 </html>
