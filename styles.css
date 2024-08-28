@@ -142,7 +142,6 @@ input[type="radio"] {
 }
 
 .success-container {
-    display: none;
     background-color: #4caf50;
     padding: 40px;
     border-radius: 12px;
