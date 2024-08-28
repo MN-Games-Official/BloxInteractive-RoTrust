@@ -152,6 +152,7 @@ async function submitFormData(data) {
         console.error('Error inserting data:', error);
         alert('An error occurred while saving the data.');
     } else {
+        showSuccessPage();
     }
 }
 
@@ -282,7 +283,6 @@ function evaluateGame() {
         rating: rating,
         score: score
     };
-    showSuccessPage();
     // Submit form data
     submitFormData(formData);
 }
