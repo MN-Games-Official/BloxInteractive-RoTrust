@@ -287,12 +287,14 @@ function evaluateGame() {
     submitFormData(formData);
 }
 function showSuccessPage() {
-    document.getElementById('successPage').classList.remove('hidden');
-};
-// Reload page to submit another form
-function reloadPage() {
-    window.location.reload();
+    const successPage = document.getElementById('successPage');
+    successPage.classList.remove('hidden');  // Remove the 'hidden' class to show the element
 }
+
+function reloadPage() {
+    window.location.reload();  // Reload the page to reset the questionnaire
+}
+
 
 // Event listeners for showing/hiding sub-questions
 document.addEventListener('change', handleSubQuestionsVisibility);
