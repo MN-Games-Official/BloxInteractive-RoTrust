@@ -10,25 +10,22 @@
     <div class="container">
         <h1>Roblox Game Rating Questionnaire</h1>
         <div class="form-container">
-            <form id="initialForm">
+            <form id="gameForm">
                 <h2>Game Details</h2>
                 <label for="gameName">Game Name:</label>
                 <input type="text" id="gameName" name="gameName" required><br>
                 <label for="groupName">Group Name (If you have one):</label>
                 <input type="text" id="groupName" name="groupName"><br>
-                <button type="button" class="next-button" onclick="showQuestionnaire()">Start Questionnaire</button>
-            </form>
-
-            <form id="gameForm" style="display: none;">
+                
                 <!-- Question Pages (same as before) -->
                 <div class="question-card" id="page-1">
                     <h2>1. Does the game contain violence?</h2>
                     <p>Description: Violence includes physical confrontations, fighting, or harming other characters.</p>
-                    <input type="radio" id="violence-yes" name="violence" value="yes">
+                    <input type="radio" id="violence-yes" name="violence" value="yes" onchange="toggleSubQuestions('violence', true)">
                     <label for="violence-yes">Yes</label><br>
-                    <input type="radio" id="violence-no" name="violence" value="no">
+                    <input type="radio" id="violence-no" name="violence" value="no" onchange="toggleSubQuestions('violence', false)">
                     <label for="violence-no">No</label>
-                    <div class="sub-questions" id="violence-sub">
+                    <div class="sub-questions" id="violence-sub" style="display: none;">
                         <label>Type of violence:</label><br>
                         <input type="radio" id="violence-mild" name="violenceType" value="1">
                         <label for="violence-mild">Mild (e.g., cartoonish violence)</label><br>
@@ -39,15 +36,37 @@
                     </div>
                     <button type="button" class="next-button" onclick="showNextPage(2)">Next</button>
                 </div>
+                
                 <!-- Other question pages (same as before) -->
-                <div class="question-card" id="page-5">
+                <div class="question-card" id="page-2" style="display: none;">
+                    <h2>2. Does the game contain strong language?</h2>
+                    <p>Description: Strong language includes profanity or vulgar terms.</p>
+                    <input type="radio" id="language-yes" name="language" value="yes" onchange="toggleSubQuestions('language', true)">
+                    <label for="language-yes">Yes</label><br>
+                    <input type="radio" id="language-no" name="language" value="no" onchange="toggleSubQuestions('language', false)">
+                    <label for="language-no">No</label>
+                    <div class="sub-questions" id="language-sub" style="display: none;">
+                        <label>Type of language:</label><br>
+                        <input type="radio" id="language-mild" name="languageType" value="1">
+                        <label for="language-mild">Mild (e.g., mild swear words)</label><br>
+                        <input type="radio" id="language-moderate" name="languageType" value="2">
+                        <label for="language-moderate">Moderate (e.g., frequent use of strong language)</label><br>
+                        <input type="radio" id="language-extensive" name="languageType" value="3">
+                        <label for="language-extensive">Extensive (e.g., excessive and graphic language)</label>
+                    </div>
+                    <button type="button" class="next-button" onclick="showNextPage(3)">Next</button>
+                </div>
+
+                <!-- Repeat similar blocks for pages 3 and 4 -->
+                
+                <div class="question-card" id="page-5" style="display: none;">
                     <h2>5. Is the game intended for a competitive audience?</h2>
                     <p>Description: Competitive games involve skill-based challenges and may include intense gameplay.</p>
-                    <input type="radio" id="competitive-yes" name="competitive" value="yes">
+                    <input type="radio" id="competitive-yes" name="competitive" value="yes" onchange="toggleSubQuestions('competitive', true)">
                     <label for="competitive-yes">Yes</label><br>
-                    <input type="radio" id="competitive-no" name="competitive" value="no">
+                    <input type="radio" id="competitive-no" name="competitive" value="no" onchange="toggleSubQuestions('competitive', false)">
                     <label for="competitive-no">No</label>
-                    <div class="sub-questions" id="competitive-sub">
+                    <div class="sub-questions" id="competitive-sub" style="display: none;">
                         <label>Level of competitiveness:</label><br>
                         <input type="radio" id="competitive-light" name="competitiveType" value="1">
                         <label for="competitive-light">Light (e.g., casual competitive elements)</label><br>
@@ -63,123 +82,117 @@
         <div id="result" class="result"></div>
     </div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.2/dist/umd/supabase.min.js"></script>
-    <script>
-// Supabase client configuration
-const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+<script>
+    // Supabase client configuration
+    const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-function showQuestionnaire() {
-    document.getElementById('initialForm').style.display = 'none';
-    document.getElementById('gameForm').style.display = 'block';
-}
-
-function showNextPage(pageNumber) {
-    const pages = document.querySelectorAll('.question-card');
-    pages.forEach(page => page.style.display = 'none');
-    document.getElementById(`page-${pageNumber}`).style.display = 'block';
-}
-
-function toggleSubQuestions(questionId, show) {
-    document.getElementById(`${questionId}-sub`).style.display = show ? 'block' : 'none';
-}
-
-function submitForm() {
-    const form = document.getElementById('gameForm');
-    const initialForm = document.getElementById('initialForm');
-
-    const gameName = initialForm.elements['gameName'].value;
-    const groupName = initialForm.elements['groupName'].value || null;
-
-    const violence = form.elements['violence']?.value === 'yes' ? 1 : 0;
-    const violenceType = parseInt(form.elements['violenceType'] ? form.elements['violenceType'].value : 0, 10);
-    const language = form.elements['language']?.value === 'yes' ? 1 : 0;
-    const languageType = parseInt(form.elements['languageType'] ? form.elements['languageType'].value : 0, 10);
-    const mature = form.elements['mature']?.value === 'yes' ? 1 : 0;
-    const matureType = parseInt(form.elements['matureType'] ? form.elements['matureType'].value : 0, 10);
-    const fear = form.elements['fear']?.value === 'yes' ? 1 : 0;
-    const fearType = parseInt(form.elements['fearType'] ? form.elements['fearType'].value : 0, 10);
-    const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
-    const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
-
-    // Define weights
-    const weights = {
-        violence: 1,
-        language: 1,
-        mature: 1,
-        fear: 0.5,
-        competitive: 0.5
-    };
-
-    // Define sub-question weights
-    const subWeights = {
-        violence: [0.5, 1, 2],
-        language: [0.5, 1, 2],
-        mature: [1, 2, 3],
-        fear: [0.5, 1, 1.5],
-        competitive: [0.5, 1, 1.5]
-    };
-
-    // Calculate the total score
-    const score = (
-        (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
-        (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
-        (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
-        (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
-        (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
-    );
-
-    // Determine the rating based on the score
-    let rating = '';
-
-    if (score >= 10) {
-        rating = '18+';
-    } else if (score >= 8) {
-        rating = '17+';
-    } else if (score >= 6) {
-        rating = '16+';
-    } else if (score >= 4) {
-        rating = '15+';
-    } else if (score >= 3) {
-        rating = '14+';
-    } else if (score >= 2) {
-        rating = '13+';
-    } else if (score >= 1) {
-        rating = '10+';
-    } else {
-        rating = '7+';
+    function showNextPage(pageNumber) {
+        const pages = document.querySelectorAll('.question-card');
+        pages.forEach(page => page.style.display = 'none');
+        document.getElementById(`page-${pageNumber}`).style.display = 'block';
     }
 
-    // Insert data into Supabase
-    supabase
-        .from('games_rotrust')
-        .insert([
-            { 
-                game_name: gameName, 
-                group_name: groupName,
-                violence: violence,
-                violence_type: violenceType,
-                language: language,
-                language_type: languageType,
-                mature: mature,
-                mature_type: matureType,
-                fear: fear,
-                fear_type: fearType,
-                competitive: competitive,
-                competitive_type: competitiveType,
-                rating: rating
-            }
-        ])
-        .then(({ data, error }) => {
-            if (error) {
-                console.error('Error inserting data:', error);
-                document.getElementById('result').textContent = 'There was an error submitting the form. Please try again.';
-            } else {
-                document.getElementById('result').textContent = `The suitable age rating for this game is: ${rating}`;
-                showQuestionnaire(); // Show the questionnaire form after successful submission
-            }
-        });
-}
+    function toggleSubQuestions(questionId, show) {
+        document.getElementById(`${questionId}-sub`).style.display = show ? 'block' : 'none';
+    }
+
+    function submitForm() {
+        const form = document.getElementById('gameForm');
+        
+        // Extract values
+        const gameName = form.elements['gameName'].value;
+        const groupName = form.elements['groupName'].value || null;
+
+        const violence = form.elements['violence']?.value === 'yes' ? 1 : 0;
+        const violenceType = parseInt(form.elements['violenceType'] ? form.elements['violenceType'].value : 0, 10);
+        const language = form.elements['language']?.value === 'yes' ? 1 : 0;
+        const languageType = parseInt(form.elements['languageType'] ? form.elements['languageType'].value : 0, 10);
+        const mature = form.elements['mature']?.value === 'yes' ? 1 : 0;
+        const matureType = parseInt(form.elements['matureType'] ? form.elements['matureType'].value : 0, 10);
+        const fear = form.elements['fear']?.value === 'yes' ? 1 : 0;
+        const fearType = parseInt(form.elements['fearType'] ? form.elements['fearType'].value : 0, 10);
+        const competitive = form.elements['competitive']?.value === 'yes' ? 1 : 0;
+        const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
+
+        // Define weights
+        const weights = {
+            violence: 1,
+            language: 1,
+            mature: 1,
+            fear: 0.5,
+            competitive: 0.5
+        };
+
+        // Define sub-question weights
+        const subWeights = {
+            violence: [0.5, 1, 2],
+            language: [0.5, 1, 2],
+            mature: [1, 2, 3],
+            fear: [0.5, 1, 1.5],
+            competitive: [0.5, 1, 1.5]
+        };
+
+        // Calculate the total score
+        const score = (
+            (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
+            (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
+            (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
+            (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
+            (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
+        );
+
+        // Determine the rating based on the score
+        let rating = '';
+
+        if (score >= 10) {
+            rating = '18+';
+        } else if (score >= 8) {
+            rating = '17+';
+        } else if (score >= 6) {
+            rating = '16+';
+        } else if (score >= 4) {
+            rating = '15+';
+        } else if (score >= 3) {
+            rating = '14+';
+        } else if (score >= 2) {
+            rating = '13+';
+        } else if (score >= 1) {
+            rating = '10+';
+        } else {
+            rating = '7+';
+        }
+
+        // Insert data into Supabase
+        supabase
+            .from('games_rotrust')
+            .insert([
+                { 
+                    game_name: gameName, 
+                    group_name: groupName,
+                    violence: violence,
+                    violence_type: violenceType,
+                    language: language,
+                    language_type: languageType,
+                    mature: mature,
+                    mature_type: matureType,
+                    fear: fear,
+                    fear_type: fearType,
+                    competitive: competitive,
+                    competitive_type: competitiveType,
+                    rating: rating
+                }
+            ])
+            .then(({ data, error }) => {
+                if (error) {
+                    console.error('Error inserting data:', error);
+                    document.getElementById('result').textContent = 'There was an error submitting the form. Please try again.';
+                } else {
+                    document.getElementById('result').textContent = `The suitable age rating for this game is: ${rating}`;
+                }
+            });
+    }
 </script>
 </body>
 </html>
