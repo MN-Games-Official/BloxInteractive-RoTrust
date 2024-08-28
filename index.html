@@ -187,13 +187,32 @@ function evaluateGame() {
     const competitiveType = parseInt(form.elements['competitiveType'] ? form.elements['competitiveType'].value : 0, 10);
 
     // Calculate the total score
-    const score = (
-        (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
-        (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
-        (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
-        (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
-        (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
-    );
+        // Define weights
+        const weights = {
+            violence: 1,
+            language: 1,
+            mature: 1,
+            fear: 0.5,
+            competitive: 0.5
+        };
+
+        // Define sub-question weights
+        const subWeights = {
+            violence: [0.5, 1, 2],
+            language: [0.5, 1, 2],
+            mature: [1, 2, 3],
+            fear: [0.5, 1, 1.5],
+            competitive: [0.5, 1, 1.5]
+        };
+
+        // Calculate the total score
+        const score = (
+            (violence * weights.violence + (violenceType ? subWeights.violence[violenceType - 1] : 0)) +
+            (language * weights.language + (languageType ? subWeights.language[languageType - 1] : 0)) +
+            (mature * weights.mature + (matureType ? subWeights.mature[matureType - 1] : 0)) +
+            (fear * weights.fear + (fearType ? subWeights.fear[fearType - 1] : 0)) +
+            (competitive * weights.competitive + (competitiveType ? subWeights.competitive[competitiveType - 1] : 0))
+        );
 
     // Determine the rating based on the score
     let rating = '';
