@@ -67,7 +67,7 @@
         // Supabase client configuration
         const SUPABASE_URL = 'https://utgmmvofnginuwvzajig.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InV0Z21tdm9mbmdpbnV3dnphamlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjE5NTczMzksImV4cCI6MjAzNzUzMzMzOX0.YWH5Ceiz0OI_h8M6wG1M2UsDXM_43i5UdopmYLGO7aE';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         function showQuestionnaire() {
             document.getElementById('initialForm').style.display = 'none';
