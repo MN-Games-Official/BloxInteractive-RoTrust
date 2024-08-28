@@ -57,7 +57,43 @@
                     <button type="button" class="next-button" onclick="showNextPage(3)">Next</button>
                 </div>
 
-                <!-- Repeat similar blocks for pages 3 and 4 -->
+                <div class="question-card" id="page-3" style="display: none;">
+    <h2>3. Does the game contain mature content?</h2>
+    <p>Description: Mature content includes sexual themes, nudity, or explicit behavior.</p>
+    <input type="radio" id="mature-yes" name="mature" value="yes" onchange="toggleSubQuestions('mature', true)">
+    <label for="mature-yes">Yes</label><br>
+    <input type="radio" id="mature-no" name="mature" value="no" onchange="toggleSubQuestions('mature', false)">
+    <label for="mature-no">No</label>
+    <div class="sub-questions" id="mature-sub" style="display: none;">
+        <label>Type of mature content:</label><br>
+        <input type="radio" id="mature-light" name="matureType" value="1">
+        <label for="mature-light">Light (e.g., mild suggestive content)</label><br>
+        <input type="radio" id="mature-moderate" name="matureType" value="2">
+        <label for="mature-moderate">Moderate (e.g., sexual themes, nudity)</label><br>
+        <input type="radio" id="mature-extensive" name="matureType" value="3">
+        <label for="mature-extensive">Extensive (e.g., explicit sexual content)</label>
+    </div>
+    <button type="button" class="next-button" onclick="showNextPage(4)">Next</button>
+</div>
+<div class="question-card" id="page-4" style="display: none;">
+    <h2>4. Does the game contain fear or horror elements?</h2>
+    <p>Description: Fear or horror elements include frightening imagery, scary scenarios, or disturbing content.</p>
+    <input type="radio" id="fear-yes" name="fear" value="yes" onchange="toggleSubQuestions('fear', true)">
+    <label for="fear-yes">Yes</label><br>
+    <input type="radio" id="fear-no" name="fear" value="no" onchange="toggleSubQuestions('fear', false)">
+    <label for="fear-no">No</label>
+    <div class="sub-questions" id="fear-sub" style="display: none;">
+        <label>Level of fear:</label><br>
+        <input type="radio" id="fear-mild" name="fearType" value="1">
+        <label for="fear-mild">Mild (e.g., spooky but not terrifying)</label><br>
+        <input type="radio" id="fear-moderate" name="fearType" value="2">
+        <label for="fear-moderate">Moderate (e.g., frightening scenes or imagery)</label><br>
+        <input type="radio" id="fear-extensive" name="fearType" value="3">
+        <label for="fear-extensive">Extensive (e.g., intense horror or disturbing content)</label>
+    </div>
+    <button type="button" class="next-button" onclick="showNextPage(5)">Next</button>
+</div>
+
                 
                 <div class="question-card" id="page-5" style="display: none;">
                     <h2>5. Is the game intended for a competitive audience?</h2>
